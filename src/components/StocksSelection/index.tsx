@@ -11,24 +11,27 @@ import {
 import { useEffect, useState } from "react";
 import { yahooApi } from "../../utils/yahooApi";
 import { data } from "./data";
-
-interface StockPrice {
-  longName: string;
-  yahoo: string;
-  marketPrice: number;
-  changePercent: number;
-}
+import { Loading } from "notiflix";
+import {
+  StocksPrice,
+  updateStocksPrices,
+} from "../../redux/features/stocksPricesSlice";
+import { useAppDispatch } from "../../redux/hooks";
 
 const StocksSelection = () => {
   const stocks = data;
+  const dispatch = useAppDispatch();
   // const [stockData, setStockData] = useState<StockPrice[]>();
-  const [stockData, setStockData] = useState([]);
+  const [stockData, setStockData] = useState<StocksPrice[]>();
   const [showPrice, setShowPrice] = useState<boolean>(false);
 
   const handleClick = async () => {
+    Loading.dots();
     const res: any = await yahooApi(data);
     setStockData(res);
+    dispatch(updateStocksPrices(res));
     setShowPrice(true);
+    Loading.remove();
   };
 
   return (
@@ -42,7 +45,7 @@ const StocksSelection = () => {
           <Item>Local CCY</Item>
         </Company> */}
         {showPrice &&
-          stockData.map((stock: any, index: number) => {
+          stockData!.map((stock: any, index: number) => {
             return (
               <ItemWrapper key={index}>
                 <Company>

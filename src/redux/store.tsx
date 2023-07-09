@@ -1,15 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import darkmodeSlice from "./features/darkmodeSlice";
 
-import loginSlice from "./features/loginSlice";
-
-import accessTokenSlice from "./features/accessTokenSlice";
+import accessTokenSlice from "./features/stocksPricesSlice";
+import stocksPriceSlice from "./features/stocksPricesSlice";
 
 const store = configureStore({
   reducer: {
-    darkmode: darkmodeSlice,
-    accessToken: accessTokenSlice,
-    login: loginSlice,
+    stocksPrices: stocksPriceSlice,
   },
 });
 
