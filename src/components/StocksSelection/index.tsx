@@ -13,7 +13,7 @@ import { yahooApi } from "../../utils/yahooApi";
 import { data } from "./data";
 import { Loading } from "notiflix";
 import {
-  StocksPrice,
+  StockPrice,
   updateStocksPrices,
 } from "../../redux/features/stocksPricesSlice";
 import { useAppDispatch } from "../../redux/hooks";
@@ -22,16 +22,22 @@ const StocksSelection = () => {
   const stocks = data;
   const dispatch = useAppDispatch();
   // const [stockData, setStockData] = useState<StockPrice[]>();
-  const [stockData, setStockData] = useState<StocksPrice[]>();
+  const [stockData, setStockData] = useState<StockPrice[]>([]);
   const [showPrice, setShowPrice] = useState<boolean>(false);
 
   const handleClick = async () => {
-    Loading.dots();
-    const res: any = await yahooApi(data);
-    setStockData(res);
-    dispatch(updateStocksPrices(res));
-    setShowPrice(true);
-    Loading.remove();
+    try {
+      // Loading.dots();
+      const res: any = await yahooApi();
+      if (res.data.success) {
+        setStockData(res.data.data.priceResult);
+        dispatch(updateStocksPrices(res.data.data.priceResult));
+        setShowPrice(true);
+        // Loading.remove();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
