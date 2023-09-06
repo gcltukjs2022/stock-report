@@ -27,17 +27,41 @@ const StocksSelection = () => {
   // const [stockData, setStockData] = useState<StockPrice[]>();
   const [stockData, setStockData] = useState<StockPrice[]>([]);
   const [showPrice, setShowPrice] = useState<boolean>(false);
+  const now = new Date();
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+
+  useEffect(() => {
+    // Check if the current time is between 08:35 and 12:35
+    if (
+      (utcHours === 8 && utcMinutes >= 35) ||
+      (utcHours > 8 && utcHours < 12) ||
+      (utcHours === 12 && utcMinutes <= 35)
+    ) {
+      // If the condition is met, make the div visible
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+  }, [utcMinutes]);
 
   const handleClick = async () => {
     try {
       Loading.circle();
-      const response: any = await getReport();
-      Loading.remove();
-      if (response.data.success) {
-        const base64Data = response.data.file;
-        const dataUri = `data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,${base64Data}`;
-        setFileUrl(dataUri);
-        setReady(true);
+      // const response: any = await getReport();
+      // Loading.remove();
+      // if (response.data.success) {
+      //   const base64Data = response.data.file;
+      //   const dataUri = `data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,${base64Data}`;
+      //   setFileUrl(dataUri);
+      //   setReady(true);
+      // }
+      const res = await axios.get(
+        " https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/stock-report",
+      );
+
+      if (res) {
+        Loading.remove();
       }
     } catch (error) {
       Loading.remove();
@@ -65,10 +89,17 @@ const StocksSelection = () => {
   return (
     <Container>
       <Button onClick={handleClick}>Refresh</Button>
+
       {ready && (
         <div>
           <h2>Your file is ready</h2>
-          <div onClick={handleDownload}>Click here to download</div>
+          <a
+            href="https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report.docx"
+            target="_blank"
+          >
+            Click here to download
+            {/* <div onClick={handleDownload}>Click here to download</div> */}
+          </a>
         </div>
       )}
 
