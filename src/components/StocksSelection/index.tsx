@@ -30,6 +30,8 @@ const StocksSelection = () => {
   const now = new Date();
   const utcHours = now.getUTCHours();
   const utcMinutes = now.getUTCMinutes();
+  const today = moment();
+  const formattedDate = today.format("DDMMYYYY");
 
   useEffect(() => {
     // Check if the current time is between 08:35 and 12:35
@@ -57,7 +59,7 @@ const StocksSelection = () => {
       //   setReady(true);
       // }
       const res = await axios.get(
-        " https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/stock-report",
+        `https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/stock-report${formattedDate}`,
       );
 
       if (res) {
