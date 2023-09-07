@@ -32,6 +32,7 @@ const StocksSelection = () => {
   const utcMinutes = now.getUTCMinutes();
   const today = moment();
   const formattedDate = today.format("DDMMYYYY");
+  const downloadUrl = `https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report${formattedDate}`;
 
   useEffect(() => {
     // Check if the current time is between 08:35 and 12:35
@@ -59,7 +60,7 @@ const StocksSelection = () => {
       //   setReady(true);
       // }
       const res = await axios.get(
-        `https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/stock-report${formattedDate}`,
+        `https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/stock-report`,
       );
 
       if (res) {
@@ -96,7 +97,7 @@ const StocksSelection = () => {
         <div>
           <h2>Your file is ready</h2>
           <a
-            href="https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report.docx"
+            href={downloadUrl}
             target="_blank"
           >
             Click here to download
