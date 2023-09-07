@@ -32,7 +32,7 @@ const StocksSelection = () => {
   const utcMinutes = now.getUTCMinutes();
   const today = moment();
   const formattedDate = today.format("DDMMYYYY");
-  const downloadUrl = `https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report${formattedDate}`;
+  const downloadUrl = `https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report${formattedDate}.docx`;
 
   useEffect(() => {
     // Check if the current time is between 08:35 and 12:35
