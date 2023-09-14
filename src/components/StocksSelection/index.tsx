@@ -34,19 +34,19 @@ const StocksSelection = () => {
   const formattedDate = today.format("DDMMYYYY");
   const downloadUrl = `https://stock-report-bucket.s3.ap-east-1.amazonaws.com/report${formattedDate}.docx`;
 
-  // useEffect(() => {
-  //   // Check if the current time is between 08:35 and 14:35
-  //   if (
-  //     (utcHours === 8 && utcMinutes >= 35) ||
-  //     (utcHours > 8 && utcHours < 12) ||
-  //     (utcHours === 15 && utcMinutes <= 35)
-  //   ) {
-  //     // If the condition is met, make the div visible
-  //     setReady(true);
-  //   } else {
-  //     setReady(false);
-  //   }
-  // }, [utcMinutes]);
+  useEffect(() => {
+    // Check if the current time is between 08:35 and 14:35
+    if (
+      (utcHours === 8 && utcMinutes >= 35) ||
+      (utcHours > 8 && utcHours < 12) ||
+      (utcHours === 15 && utcMinutes <= 35)
+    ) {
+      // If the condition is met, make the div visible
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+  }, [utcMinutes]);
 
   const handleClick = async () => {
     try {
@@ -60,7 +60,7 @@ const StocksSelection = () => {
       //   setReady(true);
       // }
       const res = await axios.get(
-        `https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/`
+        `https://x37c35vcxjrpgeqtcqzos3g3ym0jczos.lambda-url.ap-east-1.on.aws/`,
       );
 
       if (res) {
@@ -94,7 +94,10 @@ const StocksSelection = () => {
       {ready ? (
         <div>
           <h2>Your file is ready</h2>
-          <a href={downloadUrl} target="_blank">
+          <a
+            href={downloadUrl}
+            target="_blank"
+          >
             Click here to download
             {/* <div onClick={handleDownload}>Click here to download</div> */}
           </a>
