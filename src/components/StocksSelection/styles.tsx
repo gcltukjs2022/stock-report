@@ -4,6 +4,32 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
+  width: 100%;
+
+  align-items: center;
+  text-align: center;
+
+  > p {
+    color: #fff;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    > h2 {
+      color: #fff;
+    }
+
+    > a {
+      color: #fff;
+    }
+
+    > p {
+      color: #fff;
+    }
+  }
 `;
 
 export const List = styled.div`
@@ -36,10 +62,12 @@ export const Item = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 300px;
+  width: 100%;
   height: 70px;
   color: white;
-  background: blue;
+  background: rgb(199, 168, 8);
+  color: black;
+  font-weight: 700;
   border: none;
   border-radius: 100px;
   margin: 0 auto;
