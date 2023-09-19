@@ -37,9 +37,9 @@ const StocksSelection = () => {
   useEffect(() => {
     // Check if the current time is between 08:35 and 14:35
     if (
-      (utcHours === 8 && utcMinutes >= 35) ||
+      (utcHours === 8 && utcMinutes >= 45) ||
       (utcHours > 8 && utcHours < 12) ||
-      (utcHours === 15 && utcMinutes <= 35)
+      (utcHours === 15 && utcMinutes <= 45)
     ) {
       // If the condition is met, make the div visible
       setReady(true);
@@ -105,7 +105,7 @@ const StocksSelection = () => {
           <Button onClick={handleClick}>Refresh</Button>
         </div>
       ) : (
-        <p>File will be ready between 0835 to 1435 UTC.</p>
+        <p>File will be ready between 0845 to 1445 UTC.</p>
       )}
     </Container>
   );
